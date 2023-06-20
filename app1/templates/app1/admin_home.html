@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Management</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    .container {
+      margin-top: 50px;
+    }
+    /* .search-form {
+      margin-bottom: 20px;
+    } */
+    .table th {
+      white-space: nowrap;
+    }
+    .delete-button,
+    .edit-button {
+      padding: 0;
+      background: none;
+      border: none;
+      color: red;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="'search-form">
+            <form class="d-flex p-4" method="POST">
+                {% csrf_token %}
+                <input class="form-control me-2 " name="search" placeholder="Search User" type="text">
+                <button class=" btn btn-success h-25 mx-2" type="submit" >Search</button>
+            </form>
+        </div>
+      </div>
+      <div class="col-md-6 text-right">
+        <a class="btn btn-primary"  href= "{% url 'admin_adduser' %}" >Add User</a>
+        <a class="btn btn-danger"  href= "{% url 'admin_logout' %}" >Logout</a>
+      </div>
+
+      
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+         <th>No.</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in datas %}
+        <tr>
+            <th scope="row">{{ forloop.counter}}</th>
+            <td>{{ i.username }}</td>
+            <td>{{ i.email }}</td>
+            <td><a class="btn btn-primary" href="{% url 'admin_edit' i.id %} "> Edit </a></td>
+            <td><a class="btn btn-danger" onclick="clicked()" href="{% url 'admin_delete' i.id %}" >Delete</a></td>
+
+        </tr>
+        {% endfor %}
+      
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+<script type="text/javascript">
+  function clicked() {
+     if (confirm('Do you want to Delete?')) {
+         yourformelement.submit();
+     } else {
+         return false;
+     }
+  }
+
+</script>
+</html>
